@@ -13,3 +13,8 @@
   justify-content: center;
 }
 
+@mixin flex-main-end{
+  display: flex;
+  justify-content: flex-end;
+}
+
