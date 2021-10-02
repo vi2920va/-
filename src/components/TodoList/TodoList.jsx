@@ -1,7 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch, connect } from 'react-redux';
+import { addTodo } from '../../reducers/todos';
 import './TodoList.scss';
 
-const TodoList = () => {
+const TodoList = ({ todos }) => {
+  console.log('todos', todos);
+
+  const [value, setValue] = useState('');
+  const dispatch = useDispatch();
+
+  const handleInput = (e) => {
+    const { value } = e.target;
+    setValue(value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(addTodo(value));
+    setValue('');
+  };
+
   return (
     <main className="todo">
       <div className="todo-container">
@@ -13,32 +31,36 @@ const TodoList = () => {
         </h1>
 
         <ul className="todo-list">
-          <li>
-            <span>Code a todo list</span>
-            <input type="checkbox" aria-label="todo checkbox value" />
-            <button type="button" className="delete-btn">
-              <i className="fas fa-trash" />
-            </button>
-          </li>
+          {todos.map((todo) => (
+            <li key={todo.id}>
+              <span>{todo.value}</span>
+              <div>
+                <button type="button" className="delete-btn">
+                  <i className="fas fa-trash" />
+                </button>
+              </div>
+            </li>
+          ))}
         </ul>
 
-        <div className="toggle-btn-wrapper">
-          <span>Move done items at the end?</span>
-          <input type="checkbox" aria-label="toggle btn checkbox" />
-        </div>
-
-        <form className="add-form">
+        <form className="add-form" onSubmit={handleSubmit}>
           <h2>Add to the todo list</h2>
           <input
             type="text"
             className="add-input"
             aria-label="add input text"
+            value={value}
+            onChange={handleInput}
           />
-          <button type="submit" className="add-btn" name="ADD ITEM" />
+          <button type="submit" className="add-btn">
+            ADD ITEM
+          </button>
         </form>
       </div>
     </main>
   );
 };
 
-export default TodoList;
+const mapStateToProps = (state) => ({ todos: state.todos });
+
+export default connect(mapStateToProps)(TodoList);
