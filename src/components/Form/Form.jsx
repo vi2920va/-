@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { addTodo } from '../../reducers/todos';
+import Button from '../Button/Button';
 import './Form.scss';
 
 const Form = () => {
@@ -8,29 +9,29 @@ const Form = () => {
   const [value, setValue] = useState('');
   const dispatch = useDispatch();
 
-  const handleInput = (event) => {
+  const handleInputChange = (event) => {
     const { value } = event.target;
     setValue(value);
   };
 
-  const handleSubmit = (event) => {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
     dispatch(addTodo(value));
     setValue('');
   };
   return (
-    <form className="add-form" onSubmit={handleSubmit}>
+    <form className="add-form" onSubmit={handleFormSubmit}>
       <h2>Add to the todo list</h2>
       <input
         type="text"
         className="add-input"
         aria-label="add input text"
         value={value}
-        onChange={handleInput}
+        onChange={handleInputChange}
       />
-      <button type="submit" className="add-btn">
+      <Button type="submit" className="add-btn">
         ADD ITEM
-      </button>
+      </Button>
     </form>
   );
 };

@@ -6,6 +6,7 @@ import './TodoList.scss';
 
 const TodoList = () => {
   const { todos } = useSelector((state) => state);
+  
   return (
     <main className="todo">
       <div className="todo-container">
@@ -26,7 +27,6 @@ const TodoList = () => {
   );
 };
 
-// connect (리덕스 스토어를)
 // const mapStateToProps = (state) => ({ todos: state.todos });
 // export default connect(mapStateToProps)(TodoList);
 

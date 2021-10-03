@@ -28,7 +28,6 @@ export default function todos(state = [], action) {
         {
           id,
           value: action.value,
-          isCompleted: false,
         },
       ];
 
